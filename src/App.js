@@ -1,23 +1,42 @@
-import logo from './logo.svg';
-import './App.css';
+/** @jsxRuntime classic */
+/** @jsx jsx */
+import { jsx, css } from '@emotion/react';
+
+import * as React from 'react';
+import { Router, Link } from '@reach/router';
+import Home from './Home';
+import Book from './Book';
+
+import './app.css';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+    <div
+      className="App"
+      css={{
+        display: 'flex',
+        flexDirection: 'column',
+        margin: '0',
+        padding: '10px',
+        width: '100vw',
+        height: '100vh',
+      }}
+    >
+      <header
+        css={{
+          display: 'flex',
+          alignItems: 'center',
+          height: '100px',
+        }}
+      >
+        <h1>
+          <Link to="/">A book is just a Mirage</Link>
+        </h1>
       </header>
+      <Router>
+        <Home path="/" />
+        <Book path="/book/:id" />
+      </Router>
     </div>
   );
 }
