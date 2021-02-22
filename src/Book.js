@@ -24,9 +24,6 @@ function Book(props) {
     () => getBook({id: props.id})
   );
 
-
-
-  console.log('ERROR', error)
   if (isLoading) {
     return (
       <Container>

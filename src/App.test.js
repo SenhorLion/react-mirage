@@ -49,6 +49,7 @@ describe('Render home page', () => {
 
     expect(loader).toBeInTheDocument();
   });
+
   it('displays books list', async () => {
     // server.loadFixtures('books');
     // server.createList('book', 5);
@@ -69,3 +70,5 @@ describe('Render home page', () => {
     });
   });
 });
+
+// TODO: Write tests around errors
