@@ -28,6 +28,7 @@ function App() {
           alignItems: 'center',
           height: '100px',
         }}
+        aria-label="header"
       >
         <h1>
           <Link to="/">A book is just a Mirage</Link>

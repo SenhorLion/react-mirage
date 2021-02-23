@@ -4,7 +4,7 @@ import { jsx, css } from '@emotion/react';
 
 import * as React from 'react';
 import { useQuery } from 'react-query';
-import { Router, Link } from "@reach/router"
+import { Router, Link, useParams } from '@reach/router';
 import { getBook } from './api';
 import { Container } from './components';
 import './app.css';
@@ -19,15 +19,17 @@ import './app.css';
 // title: "Harry Potter and the Prisoner of Azkaban"
 
 function Book(props) {
+  const { id } = useParams();
+
   const { isLoading, isError, isSuccess, data, error } = useQuery(
-    ['book', props.id],
-    () => getBook({id: props.id})
+    ['book', id],
+    () => getBook({ id }),
   );
 
   if (isLoading) {
     return (
       <Container>
-        <span>Loading...</span>
+        <span aria-label="loading">Loading...</span>
       </Container>
     );
   }
@@ -35,17 +37,19 @@ function Book(props) {
   if (isError) {
     return (
       <Container>
-        <span css={{color: 'red'}}><code>{error.message}</code></span>
+        <span css={{ color: 'red' }}>
+          <code>{error.message}</code>
+        </span>
       </Container>
     );
   }
-  
+
   return (
     <>
       <Container>
-          <h2>{data?.title}</h2>
-          <h4>{data?.author}</h4>
-          <p>{data?.synopsis}</p>
+        <h2>{data?.title}</h2>
+        <h4>{data?.author}</h4>
+        <p>{data?.synopsis}</p>
       </Container>
     </>
   );
