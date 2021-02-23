@@ -1,50 +1,12 @@
-import {
-  act,
-  render,
-  screen,
-  // finByText,
-  waitFor,
-  // waitForElementToBeRemoved,
-} from '@testing-library/react';
+import { act, render, screen, waitFor } from '@testing-library/react';
 // import { act } from '@testing-library/react-hooks';
-import { QueryClientProvider, QueryClient } from 'react-query';
 
 import { makeServer } from './mirage/server';
 // import { sharedScenario } from './mirage/shared.scenario';
-import {
-  createHistory,
-  createMemorySource,
-  LocationProvider,
-} from '@reach/router';
+
 import App from './App';
+import { createQueryClient, renderWithRouter } from './test-utils';
 
-const queryClient = new QueryClient({
-  defaultOptions: {
-    queries: {
-      retry: false, // disable retry in tests
-    },
-  },
-});
-
-// Reach Router Util
-// this is a handy function to utilize for any component
-// that relies on the router being in context
-async function renderWithRouter(
-  ui,
-  { route = '/', history = createHistory(createMemorySource(route)) } = {}
-) {
-  return {
-    ...render(
-      <QueryClientProvider client={queryClient}>
-        <LocationProvider history={history}>{ui}</LocationProvider>
-      </QueryClientProvider>
-    ),
-    // adding `history` to the returned utilities to allow us
-    // to reference it in our tests (just try to avoid using
-    // this to test implementation details).
-    history,
-  };
-}
 // NB: Use the 'renderWithRouter' helper above
 // it better handles the way the actual components are used
 // - left here as a reminder -
@@ -134,13 +96,12 @@ describe('Handles Errors', () => {
   it('displays error when no book found for given id', async () => {
     await renderWithRouter(<App />, {
       route: '/book/ERROR',
+      queryClient: createQueryClient({ retry: false }),
     });
 
     await waitFor(() => {
       expect(screen.queryByText(/loading/i)).not.toBeInTheDocument();
     });
-
-    // screen.debug();
 
     // We must waitFor the list to load
     await waitFor(async () => {
