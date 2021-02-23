@@ -1,5 +1,5 @@
 import {
-  act, 
+  act,
   render,
   screen,
   // finByText,
@@ -91,6 +91,10 @@ describe('Render Book page', () => {
   });
 
   it('displays book for given id', async () => {
+    // Create a book for our tests.
+    // As the `sharedScenario` doesnt seem to work,
+    // this will make sure our tests still work if the
+    // books.json data changes
     server.create('book', {
       title: 'My Made up Book',
       author: 'Testy Tester',
@@ -142,7 +146,7 @@ describe('Handles Errors', () => {
     await waitFor(async () => {
       const errorMessage = screen.getByText(/item not found/i);
 
-      screen.debug()
+      screen.debug();
       expect(errorMessage).toBeInTheDocument();
     });
   });
