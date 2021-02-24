@@ -48,7 +48,10 @@ function Home() {
                 </li>
               ))}
               <li key="error-xyz">
-                <Link to={`/book/ERROR`}>Error test</Link>
+                <Link to={`/book/ERROR`}>Network Error test</Link>
+              </li>
+              <li key="error-not-found">
+                <Link to={`/book/NO-BOOK`}>Book not found Error test</Link>
               </li>
             </ul>
           </>

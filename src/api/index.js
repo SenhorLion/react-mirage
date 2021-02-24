@@ -57,7 +57,7 @@ export const getBook = async ({ endpoint = '/api', id, error = false }) => {
     const res = await fetch(`${apiEndpoint}/books/${id}`);
     const data = await res.json();
 
-    if (data.error) {
+    if (data?.error) {
       throw Error(data.error);
     }
 

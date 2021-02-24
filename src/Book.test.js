@@ -93,9 +93,28 @@ describe('Render Book page', () => {
 });
 
 describe('Handles Errors', () => {
-  it('displays error when no book found for given id', async () => {
+  it('displays error when server cannot respond (ERROR case)', async () => {
     await renderWithRouter(<App />, {
       route: '/book/ERROR',
+      queryClient: createQueryClient({ retry: false }),
+    });
+
+    await waitFor(() => {
+      expect(screen.queryByText(/loading/i)).not.toBeInTheDocument();
+    });
+
+    // We must waitFor the list to load
+    await waitFor(async () => {
+      const errorMessage = screen.getByText(/A network error occured, please try again/i);
+
+      screen.debug();
+      expect(errorMessage).toBeInTheDocument();
+    });
+  });
+
+  it('displays error when no book found for given id', async () => {
+    await renderWithRouter(<App />, {
+      route: '/book/00000',
       queryClient: createQueryClient({ retry: false }),
     });
 

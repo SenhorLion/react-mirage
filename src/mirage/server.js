@@ -55,21 +55,24 @@ export function makeServer({ environment = 'test' } = {}) {
         '/books/:id',
         ({ books }, request) => {
           const id = request.params.id;
+          const book = books.find(id);
 
           // Enable a error case by passing in the "ERROR" string as id
-          // With this, we can simulate a typical error scenario,
-          // either:
-          // 1. Item by id not found
-          // 2. Network error
+          // With this, we can simulate a typical Network error scenario,
           if (id === 'ERROR') {
             // const { status, error } =
             //   Math.random() > 0.5
             //     ? { status: 404, error: `Item not found` }
             //     : { status: 500, error: 'Error occured retrieving data' };
+            const { status, error } = { status: 500, error: `A network error occured, please try again` }
+            return new Response(status, {}, { error });
+          }
+
+          if(!book) {
             const { status, error } = { status: 404, error: `Item not found` }
             return new Response(status, {}, { error });
           }
-          return books.find(id);
+          return book;
         },
         { timing: 100 }
       );

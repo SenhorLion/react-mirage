@@ -47,9 +47,9 @@ function Book(props) {
   return (
     <>
       <Container>
-        <h2>{data?.title}</h2>
-        <h4>{data?.author}</h4>
-        <p>{data?.synopsis}</p>
+        <h2>{data.title}</h2>
+        <h4>{data.author}</h4>
+        <p>{data.synopsis}</p>
       </Container>
     </>
   );
