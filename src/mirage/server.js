@@ -35,7 +35,8 @@ export function makeServer({ environment = 'test' } = {}) {
 
     routes() {
       this.namespace = 'api';
-      this.routes = 100;
+      // this.routes = 2000;
+      this.timing = 1000;
 
       // this.get('/users', ({users}) => {
       //   return users.all();
